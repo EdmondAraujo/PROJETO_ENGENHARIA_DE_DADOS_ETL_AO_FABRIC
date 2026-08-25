@@ -1,0 +1,23 @@
+# Arquivos temporários Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Ambientes e segredos
+.env
+*.env
+local.settings.json
+appsettings.Development.json
+
+# IDE / SO
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Builds .NET (API de embed token)
+web/api-token-exemplo/bin/
+web/api-token-exemplo/obj/
+
+# Notebooks Fabric - checkpoints
+.ipynb_checkpoints/
