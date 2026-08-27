@@ -1,0 +1,50 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/pipeline/definition/v1/definition.json",
+  "name": "pl_cruzamento_anp_cosmosdb",
+  "description": "Pipeline Fabric: ingestão dos dados ANP no Lakehouse e sincronização com o Azure Cosmos DB for NoSQL (modelo Análise de Agente).",
+  "properties": {
+    "activities": [
+      {
+        "name": "ingestao_lakehouse",
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebook": {
+            "referenceName": "notebook_01_ingestao_lakehouse",
+            "type": "NotebookReference"
+          }
+        },
+        "policy": { "timeout": "0.01:00:00", "retry": 1, "retryIntervalInSeconds": 120 }
+      },
+      {
+        "name": "sync_cosmosdb",
+        "dependsOn": [ { "activity": "ingestao_lakehouse", "dependencyConditions": [ "Succeeded" ] } ],
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebook": {
+            "referenceName": "notebook_02_sync_cosmosdb",
+            "type": "NotebookReference"
+          },
+          "parameters": {
+            "modo_execucao": { "value": "agendado", "type": "string" }
+          }
+        },
+        "policy": { "timeout": "0.01:00:00", "retry": 2, "retryIntervalInSeconds": 180 }
+      }
+    ],
+    "triggers": [
+      {
+        "name": "tg_mensal_anp",
+        "type": "ScheduleTrigger",
+        "typeProperties": {
+          "recurrence": {
+            "frequency": "Month",
+            "interval": 1,
+            "startTime": "2026-09-05T04:00:00Z",
+            "schedule": { "minutes": [ 0 ] }
+          }
+        },
+        "pipeline": { "pipelineReference": { "referenceName": "pl_cruzamento_anp_cosmosdb", "type": "PipelineReference" } }
+      }
+    ]
+  }
+}
