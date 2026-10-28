@@ -1,34 +1,65 @@
-# Credenciais (NUNCA versionar)
-.env
-
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-.venv/
-venv/
-env/
-*.egg-info/
-dist/
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+lib/
+lib64/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Streamlit
-.streamlit/secrets.toml
-
-# OS
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Logs
-*.log
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
-# Docker volumes (se usar db local)
-sqlserver_data/
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# Jupyter
+.ipynb_checkpoints
+
+# Streamlit
+.streamlit/
+
+# Data
+data/*.csv
+
+# Environment
+.env
+.env.local
